@@ -61,7 +61,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 .pain-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:8px 14px;font-size:.82rem;color:rgba(255,255,255,.6);display:flex;align-items:center;gap:7px}
 .pain-card span{color:rgba(255,255,255,.75)}
 .promise-list{display:flex;flex-direction:column;gap:9px}
-.promise-item{font-size:.85rem;color:rgba(255,255,255,.58);line-height:1.5;display:flex;align-items:flex-start;gap:8px}
+.promise-item{font-size:.85rem;color:rgba(255,255,255,.58);line-height:1.5;display:flex;align-items:center;gap:6px;white-space:nowrap;flex-wrap:nowrap}
 .promise-item strong{color:#fff}
 
 /* ── FORM ── */
@@ -205,26 +205,26 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 
   <!-- PAIN HOOK -->
   <div style="width:min(400px,92vw);margin:0 auto 18px;text-align:center">
-    <div style="font-family:'Orbitron',monospace;font-size:clamp(.7rem,2.5vw,.85rem);font-weight:900;letter-spacing:2px;color:rgba(255,255,255,.35);text-transform:uppercase;margin-bottom:10px">¿Te identificas?</div>
+    <div style="font-family:'Poppins',sans-serif;font-size:.82rem;font-weight:600;color:rgba(255,255,255,.35);margin-bottom:10px">¿Te suena conocido?</div>
     <div class="pain-cards">
       <div class="pain-card">😤 <span>Entrenas y no ves cambios</span></div>
       <div class="pain-card">😩 <span>No sabes qué comer</span></div>
       <div class="pain-card">😞 <span>Empiezas y lo dejas</span></div>
     </div>
-    <div style="margin-top:14px;font-family:'Orbitron',monospace;font-size:clamp(.75rem,2.8vw,.9rem);font-weight:700;color:var(--pink);letter-spacing:1px;line-height:1.5">
+    <div style="margin-top:14px;font-family:'Poppins',sans-serif;font-size:clamp(.85rem,3vw,1rem);font-weight:700;color:var(--pink);line-height:1.6">
       No es falta de ganas.<br>
-      <span style="color:#fff">Es falta de estrategia.</span>
+      <span style="color:#fff">Es falta de la guía correcta.</span>
     </div>
   </div>
 
   <!-- PROMISE -->
   <div style="width:min(400px,92vw);margin:0 auto 18px;background:linear-gradient(135deg,rgba(255,10,108,.1),rgba(255,10,108,.03));border:1px solid rgba(255,10,108,.3);border-radius:12px;padding:16px 18px;text-align:left">
-    <div style="font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:3px;color:var(--pink);margin-bottom:10px">✅ LO QUE VAS A LOGRAR</div>
+    <div style="font-family:'Poppins',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:1px;color:var(--pink);margin-bottom:10px">✅ Lo que vas a lograr</div>
     <div class="promise-list">
+      <div class="promise-item">💬 Te escribo personalmente — es un plan hecho para tu cuerpo</div>
       <div class="promise-item">🔥 Transforma tu cuerpo en <strong>8 semanas</strong></div>
-      <div class="promise-item">📋 Rutina personalizada + <strong>seguimiento real</strong></div>
-      <div class="promise-item">🥗 Plan de comidas <strong>según tu metabolismo</strong></div>
-      <div class="promise-item">💬 <strong>Te escribo yo personalmente</strong> — es un plan hecho para tu cuerpo</div>
+      <div class="promise-item">📋 Rutina personalizada + <strong>seguimiento real semana a semana</strong></div>
+      <div class="promise-item">🥗 Plan de comidas <strong>calculado para tu metabolismo</strong></div>
     </div>
   </div>
 
@@ -274,7 +274,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 
     <!-- PASO 1: Datos personales -->
     <div class="form-step active" id="fp1">
-      <div class="form-title">Empieza tu <span>transformación</span></div>
+      <div class="form-title" style="font-family:'Poppins',sans-serif;font-weight:700">Empieza tu <span>transformación</span> 💪</div>
 
       <span class="flabel">Tu nombre</span>
       <input class="finput" id="iNombre" type="text" placeholder="Escribe tu nombre..." maxlength="30" oninput="chk1()">
@@ -463,7 +463,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
     <div class="prize-code" id="pCode">KFIT-50</div>
     <div class="prize-desc" id="pDesc">Tu premio está listo.</div>
     <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:12px 14px;margin-bottom:14px;text-align:left;font-size:.82rem;color:rgba(255,255,255,.55);line-height:1.6">
-      👩 <strong style="color:#fff">Te escribo yo personalmente.</strong><br>
+      👩 <strong style="color:#fff">Te escribo personalmente.</strong><br>
       Es un plan hecho para tu cuerpo — analizo tu caso y te guío según tu objetivo real.
     </div>
     <button class="btn-claim" id="pBtn" onclick="claimPrize()">💬 HABLAR CON KAREN AHORA</button>
@@ -538,7 +538,11 @@ function showStep(n){
   document.querySelectorAll('.form-step').forEach(s=>s.classList.remove('active'));
   document.getElementById('fp'+n).classList.add('active');
   updateDots(n-1);
-  window.scrollTo({top:0,behavior:'smooth'});
+  var formEl = document.querySelector('.form-wrap');
+  if(formEl){
+    var top = formEl.getBoundingClientRect().top + window.pageYOffset - 10;
+    window.scrollTo({top: top, behavior:'smooth'});
+  }
 }
 function back(n){ showStep(n); }
 
@@ -586,21 +590,21 @@ function startScan(){
     if(pi < phrases.length-1){
       pi++;
       sMsg.style.opacity='0';
-      setTimeout(()=>{ sMsg.textContent=phrases[pi]; sMsg.className='scan-msg'+(pi>=7?' hi':''); sMsg.style.opacity='1'; },300);
+      setTimeout(()=>{ sMsg.textContent=phrases[pi]; sMsg.className='scan-msg'+(pi>=7?' hi':''); sMsg.style.opacity='1'; },200);
     }
-  }, 2600);
+  }, 1100);
 
   const pp = setInterval(()=>{
     if(progress<100){
-      let inc = progress<25?2.2 : progress<65?0.7 : progress<88?1.4 : 2.5;
+      let inc = progress<25?4 : progress<65?2 : progress<90?3 : 5;
       progress = Math.min(100, progress+inc);
       pBar.style.width = progress+'%';
       pct.textContent = Math.floor(progress)+'%';
     } else {
       clearInterval(pp); clearInterval(pt);
-      setTimeout(()=>{ calcResults(); goScreen('s3'); }, 400);
+      setTimeout(()=>{ calcResults(); goScreen('s3'); }, 300);
     }
-  }, 240);
+  }, 120);
 }
 
 // ════ CALC RESULTS — MIFFLIN-ST JEOR ════
@@ -675,6 +679,7 @@ function calcResults(){
 function goScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
+  document.getElementById('s1').scrollTo({top:0,behavior:'smooth'});
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -682,7 +687,7 @@ function goScreen(id){
 const PRIZES = [
   {lbl:'70% OFF',      sub:'Solo hoy · 1er mes',      ico:'🔥', code:'KFIT-70',     color:'#FF0A6C',
    wa:'Hola%20Karen%2C%20gan%C3%A9%20el%2070%25%20OFF%20%F0%9F%94%A5%20C%C3%B3digo%3A%20KFIT-70.%20Quiero%20reclamar%20mi%20premio%20%F0%9F%99%8F',
-   desc:'🔥 ¡El premio más grande! Tienes <strong>70% de descuento en tu primer mes</strong>. Plan completo: rutina personalizada + nutrición + seguimiento semanal. <strong>Te escribo yo personalmente.</strong>'},
+   desc:'🔥 ¡El premio más grande! Tienes <strong>70% de descuento en tu primer mes</strong>. Plan completo: rutina personalizada + nutrición + seguimiento semanal. <strong>Te escribo personalmente.</strong>'},
   {lbl:'ASESORÍA GRATIS',sub:'1-a-1 con Karen',       ico:'📲', code:'KFIT-ASESORIA',color:'#00FFD1',
    wa:'Hola%20Karen%2C%20gan%C3%A9%20una%20asesor%C3%ADa%20personalizada%20GRATIS%20%F0%9F%92%AC%20C%C3%B3digo%3A%20KFIT-ASESORIA.%20Quiero%20agendarla%20%F0%9F%99%8F',
    desc:'📲 Ganaste una <strong>asesoría personalizada 1-a-1 conmigo</strong>. Analizo tu cuerpo, tu objetivo y te digo exactamente qué necesitas. <strong>Es un plan hecho para tu cuerpo.</strong>'},
